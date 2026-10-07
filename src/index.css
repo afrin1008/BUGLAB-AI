@@ -1,0 +1,286 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #070b1c;
+  color: #f5f7ff;
+}
+
+.app {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 70% 20%, #17134a 0, transparent 35%),
+    #070b1c;
+}
+
+.topbar {
+  height: 80px;
+  padding: 0 35px;
+  display: flex;
+  align-items: center;
+  gap: 35px;
+  border-bottom: 1px solid #252b50;
+  background: rgba(7, 11, 28, 0.9);
+}
+
+.logo {
+  font-size: 25px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.logo span {
+  color: #ffffff;
+}
+
+.logo b {
+  color: #38f5bd;
+}
+
+.tagline {
+  color: #9ca8d7;
+  border-left: 1px solid #353b61;
+  padding-left: 35px;
+}
+
+.user-info {
+  margin-left: auto;
+  color: #cbd2f4;
+}
+
+.layout {
+  display: flex;
+  min-height: calc(100vh - 80px);
+}
+
+.sidebar {
+  width: 230px;
+  padding: 30px 18px;
+  border-right: 1px solid #252b50;
+}
+
+.menu {
+  padding: 15px 18px;
+  margin-bottom: 8px;
+  border-radius: 12px;
+  color: #aeb8df;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.menu:hover,
+.menu.active {
+  background: #47209b;
+  color: white;
+}
+
+.bug-message {
+  margin-top: 80px;
+  text-align: center;
+  color: #42f5bd;
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.main-content {
+  flex: 1;
+  max-width: 1200px;
+  padding: 40px;
+}
+
+.welcome-card {
+  min-height: 250px;
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border: 1px solid #30396c;
+  border-radius: 20px;
+
+  background:
+    linear-gradient(120deg, rgba(18, 28, 76, 0.95), rgba(20, 13, 62, 0.9));
+
+  box-shadow: 0 0 35px rgba(82, 63, 190, 0.18);
+}
+
+.green-text {
+  color: #3ff5ba;
+  font-weight: bold;
+  font-size: 18px;
+  letter-spacing: 2px;
+}
+
+h1 {
+  margin: 10px 0 20px;
+  font-size: 48px;
+  letter-spacing: 3px;
+}
+
+h1 span {
+  color: #42f5bd;
+}
+
+.welcome-card p:last-child {
+  color: #aeb8df;
+  font-size: 19px;
+  line-height: 1.5;
+}
+
+.mascot {
+  font-size: 100px;
+  padding-right: 60px;
+}
+
+.coming-soon {
+  margin-top: 25px;
+  padding: 45px;
+  text-align: center;
+
+  border: 1px solid #30396c;
+  border-radius: 20px;
+
+  background: #0c1128;
+}
+
+.coming-soon span {
+  font-size: 50px;
+}
+
+.coming-soon h2 {
+  margin: 15px 0;
+  color: #ffffff;
+}
+
+.coming-soon p {
+  color: #8792bd;
+}
+
+@media (max-width: 800px) {
+  .tagline,
+  .user-info {
+    display: none;
+  }
+
+  .sidebar {
+    width: 80px;
+  }
+
+  .menu {
+    font-size: 0;
+    text-align: center;
+  }
+
+  .main-content {
+    padding: 20px;
+  }
+
+  .mascot {
+    display: none;
+  }
+}
+.bug-card {
+  margin-top: 25px;
+  padding: 30px;
+
+  border: 1px solid #30396c;
+  border-radius: 20px;
+
+  background: #0c1128;
+
+  box-shadow: 0 0 30px rgba(66, 245, 189, 0.08);
+}
+
+.bug-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.bug-header h2 {
+  color: #42f5bd;
+  margin-bottom: 8px;
+}
+
+.bug-header p {
+  color: #aeb8df;
+}
+
+.difficulty {
+  font-size: 20px;
+}
+
+.code-window {
+  background: #050817;
+  border: 1px solid #28325b;
+  border-radius: 12px;
+  padding: 25px;
+  overflow-x: auto;
+}
+
+.code-window pre {
+  color: #d9e2ff;
+  font-family: Consolas, monospace;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.run-button,
+.hint-button {
+  padding: 13px 22px;
+  border-radius: 10px;
+  border: none;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.run-button {
+  background: #42f5bd;
+  color: #07101c;
+}
+
+.hint-button {
+  background: #6d45d8;
+  color: white;
+}
+
+.run-button:hover {
+  background: #68ffd0;
+}
+
+.hint-button:hover {
+  background: #8059e8;
+}
+
+.result-box {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 10px;
+  background: #171d3b;
+  border: 1px solid #42f5bd;
+  color: #c8d2ff;
+}
+.code-editor {
+  width: 100%;
+  min-height: 320px;
+  background: #050817;
+  color: #d9e2ff;
+  border: none;
+  outline: none;
+  resize: vertical;
+  font-family: Consolas, monospace;
+  font-size: 15px;
+  line-height: 1.7;
+}
