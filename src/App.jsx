@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 
 function App() {
@@ -16,7 +17,6 @@ int main() {
     return 0;
 }`,
     },
-
     {
       id: 2,
       title: "Division by Zero",
@@ -37,15 +37,13 @@ int main() {
   const [message, setMessage] = useState("");
 
   const [completedBugs, setCompletedBugs] = useState(() => {
-  const savedBugs = localStorage.getItem("completedBugs");
-  return savedBugs ? JSON.parse(savedBugs) : []; 
- });
- useEffect(() => {
-  localStorage.setItem(
-    "completedBugs",
-    JSON.stringify(completedBugs)
-  );
-}, [completedBugs]);
+    try {
+      const savedBugs = localStorage.getItem("completedBugs");
+      return savedBugs ? JSON.parse(savedBugs) : [];
+    } catch {
+      return [];
+    }
+  });
 
   const [currentBug, setCurrentBug] = useState(1);
 
@@ -61,6 +59,13 @@ int main() {
     setMessage("");
   }, [currentBug]);
 
+  useEffect(() => {
+    localStorage.setItem(
+      "completedBugs",
+      JSON.stringify(completedBugs)
+    );
+  }, [completedBugs]);
+
   function checkBug() {
     if (currentBug === 1) {
       return code.includes("i < 5");
@@ -74,41 +79,24 @@ int main() {
   }
 
   function runCode() {
+    if (completedBugs.includes(currentBug)) {
+      setMessage("✅ You already fixed this bug!");
+      return;
+    }
+
     if (checkBug()) {
-      if (completedBugs.includes(currentBug)) {
-        setMessage(
-          "✅ You already fixed this bug!"
-        );
-        return;
-      }
+      const points = currentBug === 1 ? 100 : 150;
+      const newXP = xp + points;
+      const newCompletedBugs = [...completedBugs, currentBug];
+
+      setXp(newXP);
+      localStorage.setItem("buglabXP", String(newXP));
+
+      setCompletedBugs(newCompletedBugs);
 
       if (currentBug === 1) {
-        const newXP = xp + 100;
-
-        setXp(newXP);
-        localStorage.setItem("buglabXP", newXP);
-
-        setCompletedBugs([
-          ...completedBugs,
-          currentBug,
-        ]);
-
-        setMessage(
-          "🎉 BUG #001 FIXED! +100 XP"
-        );
-      }
-
-      if (currentBug === 2) {
-        const newXP = xp + 150;
-
-        setXp(newXP);
-        localStorage.setItem("buglabXP", newXP);
-
-        setCompletedBugs([
-          ...completedBugs,
-          currentBug,
-        ]);
-
+        setMessage("🎉 BUG #001 FIXED! +100 XP");
+      } else {
         setMessage(
           "🎉 BUG #002 FIXED! You prevented division by zero! +150 XP"
         );
@@ -118,9 +106,7 @@ int main() {
         setMessage(
           "🚨 Bug still detected! Look at the loop condition."
         );
-      }
-
-      if (currentBug === 2) {
+      } else if (currentBug === 2) {
         setMessage(
           "🚨 Bug still detected! Don't divide by zero."
         );
@@ -133,9 +119,7 @@ int main() {
       setMessage(
         "💡 Hint: Look carefully at the condition inside the for loop."
       );
-    }
-
-    if (currentBug === 2) {
+    } else if (currentBug === 2) {
       setMessage(
         "💡 Hint: Check the value of the divisor. Can you divide by zero?"
       );
@@ -145,7 +129,6 @@ int main() {
   function nextBug() {
     if (currentBug < challenges.length) {
       setCurrentBug(currentBug + 1);
-      setMessage("");
     } else {
       setMessage(
         "🏆 You've reached the end of the available bugs!"
@@ -155,10 +138,8 @@ int main() {
 
   return (
     <div className="app">
-
       {/* TOP BAR */}
       <header className="topbar">
-
         <div className="logo">
           🐛 <span>BUGLAB</span> <b>AI</b>
         </div>
@@ -170,15 +151,12 @@ int main() {
         <div className="user-info">
           🔥 5 day streak&nbsp;&nbsp;&nbsp; 🏆 {xp} XP
         </div>
-
       </header>
 
       {/* MAIN LAYOUT */}
       <div className="layout">
-
         {/* SIDEBAR */}
         <aside className="sidebar">
-
           <div className="menu active">
             🏠 Home
           </div>
@@ -210,17 +188,13 @@ int main() {
             <br />
             Big lessons!
           </div>
-
         </aside>
 
         {/* MAIN CONTENT */}
         <main className="main-content">
-
           {/* WELCOME CARD */}
           <section className="welcome-card">
-
             <div>
-
               <p className="green-text">
                 WELCOME,
               </p>
@@ -236,32 +210,26 @@ int main() {
                 <br />
                 Become a better programmer.
               </p>
-
             </div>
 
             <div className="mascot">
               🐛💻
             </div>
-
           </section>
 
           {/* BUG CARD */}
           <section className="bug-card">
-
             <div className="bug-header">
-
               <div>
-
                 <h2>
-                  🐛 BUG #{currentBug} —{" "}
-                  {challenges[currentBug - 1]?.title}
+                  🐛 BUG #{String(currentBug).padStart(3, "0")} —{" "}
+                  {challenges[currentBug - 1].title}
                 </h2>
 
                 <p>
                   Find the hidden bug:{" "}
-                  {challenges[currentBug - 1]?.title}
+                  {challenges[currentBug - 1].title}
                 </p>
-
               </div>
 
               <div className="difficulty">
@@ -269,25 +237,22 @@ int main() {
                   ? "⭐⭐☆☆☆"
                   : "⭐⭐⭐☆☆"}
               </div>
-
             </div>
 
             {/* CODE EDITOR */}
             <div className="code-window">
-
               <textarea
                 className="code-editor"
                 value={code}
                 onChange={(event) =>
                   setCode(event.target.value)
                 }
+                spellCheck={false}
               />
-
             </div>
 
             {/* BUTTONS */}
             <div className="buttons">
-
               <button
                 className="run-button"
                 onClick={runCode}
@@ -308,7 +273,6 @@ int main() {
               >
                 ➡️ Next Bug
               </button>
-
             </div>
 
             {/* RESULT MESSAGE */}
@@ -317,13 +281,9 @@ int main() {
                 {message}
               </div>
             )}
-
           </section>
-
         </main>
-
       </div>
-
     </div>
   );
 }
