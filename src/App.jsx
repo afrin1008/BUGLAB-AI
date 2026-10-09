@@ -54,11 +54,18 @@ int main() {
 
   const [code, setCode] = useState(challenges[0].code);
 
+  // PROGRESS CALCULATIONS
+  const totalBugs = challenges.length;
+  const bugsFixed = completedBugs.length;
+  const progress = Math.round((bugsFixed / totalBugs) * 100);
+
+  // LOAD THE SELECTED CHALLENGE
   useEffect(() => {
     setCode(challenges[currentBug - 1].code);
     setMessage("");
   }, [currentBug]);
 
+  // SAVE COMPLETED BUGS
   useEffect(() => {
     localStorage.setItem(
       "completedBugs",
@@ -91,7 +98,6 @@ int main() {
 
       setXp(newXP);
       localStorage.setItem("buglabXP", String(newXP));
-
       setCompletedBugs(newCompletedBugs);
 
       if (currentBug === 1) {
@@ -217,14 +223,47 @@ int main() {
             </div>
           </section>
 
+          {/* PROGRESS DASHBOARD */}
+          <section className="bug-card">
+            <h2>📊 Your Progress</h2>
+
+            <div className="progress-stats">
+              <div>
+                <h3>🏆 {xp} XP</h3>
+                <p>Total Experience</p>
+              </div>
+
+              <div>
+                <h3>
+                  🐛 {bugsFixed} / {totalBugs}
+                </h3>
+                <p>Bugs Fixed</p>
+              </div>
+
+              <div>
+                <h3>{progress}%</h3>
+                <p>Completion</p>
+              </div>
+            </div>
+
+            <div className="progress-track">
+              <div
+                className="progress-fill"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+          </section>
+
           {/* BUG CARD */}
           <section className="bug-card">
             <div className="bug-header">
               <div>
-                <h2>
-                  🐛 BUG #{String(currentBug).padStart(3, "0")} —{" "}
-                  {challenges[currentBug - 1].title}
-                </h2>
+ 
+             <h2>
+              🐛 BUG #{String(currentBug).padStart(3, "0")} —{" "}
+               {challenges[currentBug - 1].title}
+               {completedBugs.includes(currentBug) ? " ✅ COMPLETED" : ""}
+            </h2>
 
                 <p>
                   Find the hidden bug:{" "}
