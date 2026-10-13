@@ -1194,3 +1194,52 @@ body {
   font-size: 18px;
   text-shadow: 0 0 10px #39ff1450;
 }
+
+.celebration-popup {
+  margin-top: 20px;
+  padding: 24px;
+  text-align: center;
+  border: 1px solid #39ff88;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #101b24, #211436);
+  box-shadow: 0 0 24px #39ff8830;
+  animation: celebration-pop 0.35s ease-out;
+}
+
+.celebration-emoji {
+  display: block;
+  font-size: 42px;
+  margin-bottom: 8px;
+}
+
+.celebration-popup h2 {
+  color: #39ff88;
+  margin: 8px 0;
+}
+
+.celebration-popup p {
+  color: #d5dbea;
+  margin: 8px 0;
+}
+
+.celebration-popup button {
+  margin-top: 12px;
+  padding: 10px 22px;
+  border: none;
+  border-radius: 8px;
+  background: #39ff88;
+  color: #10131a;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+@keyframes celebration-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
